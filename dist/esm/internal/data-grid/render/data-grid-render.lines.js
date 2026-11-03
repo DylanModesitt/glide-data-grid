@@ -146,7 +146,7 @@ export function drawExtraRowThemes(ctx, effectiveCols, cellYOffset, translateX, 
                 colThemeBgCell !== bgCell &&
                 tx >= minX &&
                 tx <= maxX &&
-                verticalBorder(index + 1)) {
+                verticalBorder(effectiveCols[index + 1]?.sourceIndex ?? c.sourceIndex + 1)) {
                 toDraw.push({
                     x: tx,
                     y: extraRowsStartY,
@@ -207,7 +207,7 @@ export function drawGridLines(ctx, effectiveCols, cellYOffset, translateX, trans
             continue;
         x += c.width;
         const tx = c.sticky ? x : x + translateX;
-        if (tx >= minX && tx <= maxX && verticalBorder(index + 1)) {
+        if (tx >= minX && tx <= maxX && verticalBorder(effectiveCols[index + 1]?.sourceIndex ?? c.sourceIndex + 1)) {
             toDraw.push({
                 x1: tx,
                 y1: Math.max(groupHeaderHeight, minY),
