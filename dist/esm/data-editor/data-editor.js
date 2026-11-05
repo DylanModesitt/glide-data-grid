@@ -29,8 +29,8 @@ import { useKeybindingsWithDefaults } from "./data-editor-keybindings.js";
 import { useRowGroupingInner } from "./row-grouping.js";
 import { useRowGrouping } from "./row-grouping-api.js";
 import { useInitialScrollOffset } from "./use-initial-scroll-offset.js";
-import { preloadOverlayEditors } from "../internal/data-grid-overlay-editor/preload-overlay-editors.js";
-const DataGridOverlayEditor = React.lazy(async () => await import("../internal/data-grid-overlay-editor/data-grid-overlay-editor.js"));
+import { lazyDataGridOverlayEditor, preloadOverlayEditors, } from "../internal/data-grid-overlay-editor/preload-overlay-editors.js";
+const DataGridOverlayEditor = lazyDataGridOverlayEditor.Component;
 // There must be a better way
 let idCounter = 0;
 function getSpanStops(cells) {

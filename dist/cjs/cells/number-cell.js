@@ -3,7 +3,8 @@ import * as React from "react";
 import { drawTextCell, prepTextCell, measureTextCached } from "../internal/data-grid/render/data-grid-lib.js";
 import { GridCellKind } from "../internal/data-grid/data-grid-types.js";
 import { drawEditHoverIndicator } from "../internal/data-grid/render/draw-edit-hover-indicator.js";
-const NumberOverlayEditor = React.lazy(async () => await import("../internal/data-grid-overlay-editor/private/number-overlay-editor.js"));
+import { lazyNumberOverlayEditor } from "../internal/data-grid-overlay-editor/preload-overlay-editors.js";
+const NumberOverlayEditor = lazyNumberOverlayEditor.Component;
 export const numberCellRenderer = {
     getAccessibilityString: c => c.data?.toString() ?? "",
     kind: GridCellKind.Number,
