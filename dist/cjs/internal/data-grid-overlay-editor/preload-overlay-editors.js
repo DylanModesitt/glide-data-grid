@@ -18,6 +18,10 @@ export function preloadableLazy(load) {
             loading = load().then(module => {
                 loaded = module;
                 return module;
+            }, (error) => {
+                // A failed preload must not stop the first render from loading again.
+                loading = undefined;
+                throw error;
             });
         }
         return loading;
