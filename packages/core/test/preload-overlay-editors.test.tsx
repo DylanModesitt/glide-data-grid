@@ -46,4 +46,18 @@ describe("preloadableLazy", () => {
 
         expect(load).toHaveBeenCalledTimes(1);
     });
+
+    test("loads again on first render after a failed preload", async () => {
+        const load = vi
+            .fn<() => Promise<{ default: React.FC }>>()
+            .mockRejectedValueOnce(new Error("offline"))
+            .mockResolvedValue({ default: Editor });
+        const lazy = preloadableLazy(load);
+
+        await expect(lazy.preload()).rejects.toThrow("offline");
+        renderInSuspense(lazy.Component);
+
+        expect(await screen.findByText("editor")).not.toBeNull();
+        expect(load).toHaveBeenCalledTimes(2);
+    });
 });

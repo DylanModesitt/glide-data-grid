@@ -28,10 +28,17 @@ export function preloadableLazy<T extends React.ComponentType<any>>(
     let loading: Promise<ComponentModule<T>> | undefined;
     const preload = (): Promise<ComponentModule<T>> => {
         if (loading === undefined) {
-            loading = load().then(module => {
-                loaded = module;
-                return module;
-            });
+            loading = load().then(
+                module => {
+                    loaded = module;
+                    return module;
+                },
+                (error: unknown) => {
+                    // A failed preload must not stop the first render from loading again.
+                    loading = undefined;
+                    throw error;
+                }
+            );
         }
         return loading;
     };
